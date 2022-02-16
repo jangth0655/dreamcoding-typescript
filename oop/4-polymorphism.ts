@@ -1,7 +1,8 @@
 {
   type CoffeeCup = {
     shots: number;
-    hasMilk: boolean;
+    hasMilk?: boolean;
+    sugar?: boolean;
   };
 
   interface CoffeeMaker {
@@ -46,7 +47,6 @@
       console.log(`pulling ${shots}`);
       return {
         shots,
-        hasMilk: false,
       };
     }
 
@@ -65,7 +65,6 @@
     constructor(public readonly serialNumber: string, beans: number) {
       super(beans);
     }
-
     private steamMilk(): void {
       console.log("Steaming some milk");
     }
@@ -76,9 +75,26 @@
     }
   }
 
-  const machine = new CoffeeMachine(23);
-  const latteMachine = new CafeLatteMachine("SSSS", 23);
-  latteMachine.fillCoffeeBeans(32);
-  const coffee = latteMachine.makeCoffee(1);
-  console.log(latteMachine);
+  //SweetCoffeeMaker
+  class SweetCoffeeMaker extends CoffeeMachine {
+    private sugar(): void {
+      console.log("add subar");
+    }
+    makeCoffee(shots: number): CoffeeCup {
+      const coffee = super.makeCoffee(shots);
+      this.sugar();
+      return { ...coffee, sugar: true };
+    }
+  }
+
+  const machines: CoffeeMaker[] = [
+    new CoffeeMachine(16),
+    new CafeLatteMachine("1", 16),
+    new SweetCoffeeMaker(16),
+  ];
+
+  machines.forEach((machine) => {
+    console.log(`-------------------------`);
+    machine.makeCoffee(1);
+  });
 }
