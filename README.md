@@ -42,3 +42,7 @@
 - [prototype-notion](https://www.notion.so/Prototype-f56c491a17c041dca2ea1e4b64b56144)
 
 ### ✓ this, module
+
+### ✓ ts config
+
+- tsc --init : tsconfig.json
